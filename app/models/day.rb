@@ -3,6 +3,15 @@ class Day < ActiveRecord::Base
   validate :is_not_weekend?
   belongs_to :hero
 
+  def swap(day)
+    hero = self.hero
+    self.hero = day.hero
+    day.hero = hero
+
+    day.save
+    save
+  end
+
   def is_holiday?
     ExactHoliday.check(date) ||
       RelativeHoliday.check(date)
