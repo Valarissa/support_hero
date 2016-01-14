@@ -77,7 +77,7 @@ RSpec.describe Day, type: :model do
       no_swap_day = beth.days.create(date: Date.new(2016,1,13))
       also_no_swap_day = rachel.days.create(date: Date.new(2016,1,15))
 
-      expect{subject.find_and_swap}.to raise_error
+      expect{subject.find_and_swap}.to raise_error(Day::UnreconciledDayError)
     end
   end
 end

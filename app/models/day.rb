@@ -1,5 +1,7 @@
 class Day < ActiveRecord::Base
   ERROR_THRESHOLD = 365
+  class UnreconciledDayError < ArgumentError; end
+
   validate :is_not_holiday?
   validate :is_not_weekend?
   belongs_to :hero
@@ -40,7 +42,7 @@ class Day < ActiveRecord::Base
       available_days = self.class
                            .surrounding_range(date, range)
                            .after_today
-                           .where('hero_id NOT IN (?)', restricted_users)
+                           .where.not(hero_id: restricted_users)
                            .all
       if available_days.count > 0
         swap = swap(available_days.shuffle.first)
@@ -53,7 +55,7 @@ class Day < ActiveRecord::Base
 
   def check_excess_range(range)
     if range > ERROR_THRESHOLD
-      raise "Cannot find a hero D:"
+      raise UnreconciledDayError, "Cannot find a hero D:"
     end
   end
 
