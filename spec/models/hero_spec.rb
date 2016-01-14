@@ -6,6 +6,7 @@ RSpec.describe Hero, type: :model do
     let(:beth) { described_class.create(name: "Beth") }
 
     before do
+      Date.stub(today: Date.new(2016, 1, 10)) #Set this test in time
       subject.days.create(date: Date.new(2016,1,13))
       beth.days.create(date: Date.new(2016,1,14))
     end

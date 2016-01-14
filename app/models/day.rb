@@ -6,6 +6,8 @@ class Day < ActiveRecord::Base
   validate :is_not_weekend?
   belongs_to :hero
 
+  default_scope { order(:date) }
+
   class << self
     def after_today
       where('date > ?', Date.today)
@@ -40,24 +42,32 @@ class Day < ActiveRecord::Base
   #
   # Multi-person algorithms are definitely possible but could be an
   # entire discussion in and of themselves.
-  def find_and_swap
-    restricted_users = UndoableDay.where(date: date).pluck(:hero_id)
+  def progressive_find
     swap = false
     range = 7
     while(!swap)
       check_excess_range(range)
-      available_days = self.class
-                           .surrounding_range(date, range)
-                           .after_today
-                           .where.not(hero_id: restricted_users)
-                           .all
+      available_days = swappable_days(range)
       if available_days.count > 0
-        swap = swap(available_days.shuffle.first)
+        return available_days
       end
       range *= 2
     end
+  end
 
-    swap
+  def swappable_days(range=nil)
+    @restricted_users ||= UndoableDay.where(date: date).pluck(:hero_id)
+    available_days = self.class
+                         .after_today
+                         .where.not(hero_id: @restricted_users)
+                         .where.not(hero_id: hero_id)
+    available_days = available_days.surrounding_range(date, range) if range
+    available_days.all
+  end
+
+  def find_and_swap
+    closest_available_days = progressive_find
+    swap(closest_available_days.shuffle.first)
   end
 
   def next_valid

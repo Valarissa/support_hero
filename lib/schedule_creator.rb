@@ -26,6 +26,7 @@ module ScheduleCreator
       day.save
       day = day.next_valid
     end
+    day.destroy # Remove day without a hero
   end
 
   def self.scrub_schedule
