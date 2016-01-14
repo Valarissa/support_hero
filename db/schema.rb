@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160113204902) do
+ActiveRecord::Schema.define(version: 20160113230716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,5 +49,16 @@ ActiveRecord::Schema.define(version: 20160113204902) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "undoable_days", force: :cascade do |t|
+    t.date     "date"
+    t.integer  "hero_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "undoable_days", ["hero_id", "date"], name: "index_undoable_days_on_hero_id_and_date", unique: true, using: :btree
+  add_index "undoable_days", ["hero_id"], name: "index_undoable_days_on_hero_id", using: :btree
+
   add_foreign_key "days", "heros"
+  add_foreign_key "undoable_days", "heros"
 end
