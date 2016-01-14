@@ -14,6 +14,13 @@ class Day < ActiveRecord::Base
     def surrounding_range(date, count_of_days)
       where(date: ((date - count_of_days.days)..(date + count_of_days.days)))
     end
+
+    def next_valid(date:)
+      while(!new(date: date).valid?)
+        date = date + 1.day
+      end
+      find_or_create_by(date: date)
+    end
   end
 
   def swap(day)
@@ -52,6 +59,12 @@ class Day < ActiveRecord::Base
 
     swap
   end
+
+  def next_valid
+    self.class.next_valid(date: (date + 1.day))
+  end
+
+  private
 
   def check_excess_range(range)
     if range > ERROR_THRESHOLD
