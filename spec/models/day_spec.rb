@@ -57,8 +57,8 @@ RSpec.describe Day, type: :model do
     end
 
     it "finds a day owned by a different hero than the day's hero and swaps them" do
-      tom.undoable_days.create(date: subject.date)
-      beth.undoable_days.create(date: subject.date)
+      tom.undoable_days.create(day: subject)
+      beth.undoable_days.create(day: subject)
       no_swap_day = beth.days.create(date: Date.new(2016,1,13))
       swap_day = rachel.days.create(date: Date.new(2016,1,15))
 
@@ -71,9 +71,9 @@ RSpec.describe Day, type: :model do
     # "I need a hero~! I'm holding out for a hero 'til the end of the night~!"
     # Sorry...
     it "raises an error if no hero can be found" do
-      tom.undoable_days.create(date: subject.date)
-      beth.undoable_days.create(date: subject.date)
-      rachel.undoable_days.create(date: subject.date)
+      tom.undoable_days.create(day: subject)
+      beth.undoable_days.create(day: subject)
+      rachel.undoable_days.create(day: subject)
       no_swap_day = beth.days.create(date: Date.new(2016,1,13))
       also_no_swap_day = rachel.days.create(date: Date.new(2016,1,15))
 

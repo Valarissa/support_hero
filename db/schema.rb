@@ -51,15 +51,17 @@ ActiveRecord::Schema.define(version: 20160114031953) do
   end
 
   create_table "undoable_days", force: :cascade do |t|
-    t.date     "date"
+    t.integer  "day_id"
     t.integer  "hero_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "undoable_days", ["hero_id", "date"], name: "index_undoable_days_on_hero_id_and_date", unique: true, using: :btree
+  add_index "undoable_days", ["day_id"], name: "index_undoable_days_on_day_id", using: :btree
+  add_index "undoable_days", ["hero_id", "day_id"], name: "index_undoable_days_on_hero_id_and_day_id", unique: true, using: :btree
   add_index "undoable_days", ["hero_id"], name: "index_undoable_days_on_hero_id", using: :btree
 
   add_foreign_key "days", "heros"
+  add_foreign_key "undoable_days", "days"
   add_foreign_key "undoable_days", "heros"
 end

@@ -14,7 +14,7 @@ RSpec.describe Hero, type: :model do
     it "marks a day as undoable" do
       day = subject.days.first
       subject.undoable(day)
-      expect(subject.undoable_days.where(date: day.date).count).to eq(1)
+      expect(subject.undoable_days.where(day: day).count).to eq(1)
     end
 
     it "shuffles the hero's day with another hero's day" do

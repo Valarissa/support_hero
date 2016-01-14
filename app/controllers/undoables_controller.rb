@@ -1,7 +1,7 @@
 class UndoablesController < ApplicationController
   def index
     @hero = Hero.find(params[:hero_id])
-    @undoable_days = @hero.undoable_days
+    @undoable_days = @hero.undoable_days.map(&:day)
   end
 
   def create
@@ -13,8 +13,8 @@ class UndoablesController < ApplicationController
 
   def destroy
     hero = Hero.find(params[:hero_id])
-    undoable_day = UndoableDay.find(params[:id])
-    day = Day.find_by(date: undoable_day.date)
+    undoable_day = hero.undoable_days.find(params[:id])
+    day = undoable_day.day
     undoable_day.destroy
     day.update_attribute(:hero_id, hero.id)
     redirect_to hero_path(hero)

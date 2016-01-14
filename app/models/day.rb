@@ -5,6 +5,7 @@ class Day < ActiveRecord::Base
   validate :is_not_holiday?
   validate :is_not_weekend?
   belongs_to :hero
+  has_many :undoable_days
 
   default_scope { order(:date) }
 
@@ -56,7 +57,7 @@ class Day < ActiveRecord::Base
   end
 
   def swappable_days(range=nil)
-    @restricted_users ||= UndoableDay.where(date: date).pluck(:hero_id)
+    @restricted_users ||= undoable_days.pluck(:hero_id)
     available_days = self.class
                          .after_today
                          .where.not(hero_id: @restricted_users)
