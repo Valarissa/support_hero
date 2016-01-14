@@ -1,0 +1,8 @@
+<h1>Swap <%= @day.date %></h1>
+<% @swappable_days.each do |day| %>
+  <div>
+    <h3><%= day.date %></h3>
+    <p><%= day.hero.name %></p>
+    <p><%= link_to "Swap", day_path(@day, swap_id: day.id), method: :put %></p>
+  </div>
+<% end %>

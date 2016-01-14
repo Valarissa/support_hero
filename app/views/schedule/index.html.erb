@@ -1,0 +1,8 @@
+<h1>Support Hero</h1>
+
+<% @days.each do |day| %>
+  <div class="day">
+    <h3><%= day.date %></h3>
+    <p><%= link_to day.hero.name, hero_path(day.hero) %></p>
+  </div>
+<% end %>

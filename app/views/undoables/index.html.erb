@@ -1,0 +1,9 @@
+<h1><%= @hero.name %>'s Shunned Days</h1>
+<% @undoable_days.each do |day| %>
+  <div>
+    <h3><%= day.date %></h3>
+    <p>
+      <%= link_to "Redeem My Honor", hero_undoable_path(@hero.id, day.id), method: :delete %>
+    </p>
+  </div>
+<% end %>

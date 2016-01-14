@@ -1,0 +1,5 @@
+<h1>Support Heroes Listing</h1>
+
+<% @heros.each do |hero| %>
+  <h3><%= link_to hero.name, hero %></h3>
+<% end %>
