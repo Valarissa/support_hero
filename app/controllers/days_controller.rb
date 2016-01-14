@@ -5,10 +5,10 @@ class DaysController < ApplicationController
   end
 
   def update
-    @day = Day.find(params[:id])
-    @hero = @day.hero
-    @swapping_day = Day.find(params[:swap_id])
-    @day.swap(@swapping_day)
-    redirect_to hero_path(@hero)
+    day = Day.find(params[:id])
+    hero = day.hero # Held onto to ensure proper hero for redirect.
+    swapping_day = Day.find(params[:swap_id])
+    day.swap(swapping_day)
+    redirect_to hero_path(hero)
   end
 end

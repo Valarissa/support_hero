@@ -1,11 +1,3 @@
-<h1><%= @hero.name %>'s Heroic Days</h1>
+<h2><%= @hero.name %>'s Heroic Days</h2>
 <p><%= link_to "Undoable Days", hero_undoables_path(@hero.id) %></p>
-<% @days.each do |day| %>
-  <div>
-    <h3><%= day.date %></h3>
-    <p>
-      <%= link_to "Swap", edit_day_path(day.id) %>
-      <%= link_to "Undoable", hero_undoables_path(@hero.id, day_id: day.id), method: :post %>
-    </p>
-  </div>
-<% end %>
+<%= render partial: "days/day", collection: @days, locals: {link_bar: "days/user_actions"} %>

@@ -1,0 +1,4 @@
+<p>
+  <%= link_to "Swap", edit_day_path(day.id) %>
+  <%= link_to "Undoable", hero_undoables_path(@hero.id, day_id: day.id), method: :post %>
+</p>

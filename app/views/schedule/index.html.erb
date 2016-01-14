@@ -1,8 +1,6 @@
-<h1>Support Hero</h1>
-
-<% @days.each do |day| %>
-  <div class="day">
-    <h3><%= day.date %></h3>
-    <p><%= link_to day.hero.name, hero_path(day.hero) %></p>
-  </div>
-<% end %>
+<h2>Calendar View</h2>
+<p>
+<%= link_to "Prev", schedule_path(year: @prev.year, month: @prev.month) %>
+<%= link_to "Next", schedule_path(year: @next.year, month: @next.month) %>
+</p>
+<%= render partial: "days/day", collection: @days, locals: {link_bar: "days/user_link"} %>

@@ -5,6 +5,8 @@ class ScheduleController < ApplicationController
     else
       date = Date.today
     end
+    @next = date + 1.month
+    @prev = date - 1.month
     @days = Day.where(date: date.beginning_of_month..date.end_of_month)
                .where.not(hero_id: nil)
   end
