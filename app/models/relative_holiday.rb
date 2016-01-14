@@ -5,12 +5,16 @@ class RelativeHoliday < ActiveRecord::Base
 
   class << self
     def check(date)
-      check = false
-      holidays = RelativeHoliday.where(month: date.month, day_of_week: date.wday)
+      holidays = RelativeHoliday.where(month: date.month, day_of_week: date.wday, offset: 0)
       holidays.each do |holiday|
-        check = true if date == holiday.for_year(date.year)
+        return true if date == holiday.for_year(date.year)
       end
-      check
+      relative_to_relative = RelativeHoliday.where(month: date.month).where.not(offset: 0)
+      relative_to_relative.each do |holiday|
+        return true if date == holiday.for_year(date.year)
+      end
+
+      false
     end
   end
 
@@ -28,7 +32,7 @@ class RelativeHoliday < ActiveRecord::Base
                else
                  (7 - weekday_of_first_day) + self.day_of_week
                end
-    date + modifier.days
+    date + modifier.days + offset.days
   end
 
   def second_given_day_of_month(year)
