@@ -7,7 +7,7 @@ class NullHero
     []
   end
 
-  def undoable; end
+  def undoable(*); end
 
   def days
     Day.unscoped.where(hero_id: nil)
