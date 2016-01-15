@@ -5,6 +5,6 @@ class ApplicationController < ActionController::Base
   before_filter :collect_today
 
   def collect_today
-    @today = Day.find_by(date: Date.today)
+    @today = Day.find_or_create_by(date: Date.today)
   end
 end

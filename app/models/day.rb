@@ -75,6 +75,10 @@ class Day < ActiveRecord::Base
     self.class.next_valid(date: (date + 1.day))
   end
 
+  def hero
+    super || NullHero.new
+  end
+
   private
 
   def check_excess_range(range)
