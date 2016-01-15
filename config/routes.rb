@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :undoables
   end
   resources :days
+  resources :unscheduled_days
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

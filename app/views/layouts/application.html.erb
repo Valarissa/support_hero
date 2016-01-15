@@ -7,8 +7,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <h1>Support Hero Schedule</h1>
-
+  <header>
+    <h1><%= link_to "Support Hero Schedule", root_path %></h1>
+    <nav>
+      <ul>
+        <li><%= link_to "Heroes", heros_path %></li>
+        <li><%= link_to "Unassigned Days", unscheduled_days_path %></li>
+      </ul>
+    </nav>
+  </header>
   <section>
     <h1><%= @today.hero.name %> is Today's Support Hero</h1>
   </section>

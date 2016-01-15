@@ -1,0 +1,8 @@
+<h2>Who Will Be The Hero For <%= @day.date %>?</h2>
+<%= form_tag unscheduled_day_path(@day.id), method: :put do %>
+  <%= label(:day, :hero_id, "Hero") %>
+  <%= select(:day, :hero_id) do %>
+    <%= options_from_collection_for_select(@heroes, 'id', 'name') %>
+  <% end %>
+  <%= submit_tag("Save the Day") %>
+<% end %>
